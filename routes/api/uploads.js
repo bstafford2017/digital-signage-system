@@ -3,9 +3,6 @@ const path = require('path')
 const fs = require('fs')
 const router = express.Router()
 
-
-// ADD enctype="multipart/form-data"
-
 const uploadPath = '../../uploads'
 
 // Get all files

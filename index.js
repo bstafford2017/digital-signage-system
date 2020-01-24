@@ -13,7 +13,7 @@ app.use(logger)
 app.use(fileupload())
 
 // Use routes for uploads
-app.use('/api/uploads', require('./routes/api/uploads.js'))
+app.use('/api/upload', require('./routes/api/uploads'))
 
 let port = process.env.PORT || 5000
 
