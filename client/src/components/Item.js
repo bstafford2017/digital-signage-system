@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export class Item extends Component {
 
@@ -15,10 +16,14 @@ export class Item extends Component {
   render() {
     return (
       <div className="" style={this.getStyle()}>
-
+        {this.props.title}
       </div>
     )
   }
+}
+
+Item.propTypes = {
+  item: PropTypes.object.isRequired
 }
 
 export default Item

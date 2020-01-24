@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
-import Item from '../componentsItem'
 
 export class Footer extends Component {
-  getStyle = () => {
-    return {
-      background: '#333',
-      color: '#eee',
-      textAlign: 'center'
-    }
-  }
   
   render() {
     return (
-      <div className="" style={footer}>
-        <Item />
+      <div className="bg-dark fixed-bottom text-center text-white" 
+        style={{height: '175px', padding: '40px', lineHeight: '1'}}>
+        <p>By: Benjamin Stafford &copy; 2020</p>
+        <p>School of Electrical Engineering and Computer Science</p>
+        <p>Univeristy of North Dakota</p>
       </div>
     )
   }

@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/bstafford2017/digital-signage-system#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
     "nodemon": "^2.0.2",
+    "prop-types": "^15.7.2",
     "react-router-dom": "^5.1.2"
   }
 }
