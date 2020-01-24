@@ -1,0 +1,2 @@
+[GET] http://localhost:5000/api/uploads: January 23rd 2020, 8:21:47 pm
+[POST] http://localhost:5000/api/uploads: January 23rd 2020, 8:21:51 pm
