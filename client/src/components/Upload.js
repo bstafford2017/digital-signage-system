@@ -11,16 +11,16 @@ export class Upload extends Component {
     alertError: false,
   }
 
-  onChangeBoth = () => {
-    this.setState({ 
-      disabled: false
-    })
-  }
-
   getStyle = () => {
     return {
       margin: '30px 0px'
     }
+  }
+
+  onChangeBoth = () => {
+    this.setState({ 
+      disabled: false
+    })
   }
 
   onChangeTitle = (event) => {
@@ -58,24 +58,28 @@ export class Upload extends Component {
   render() {
     return (
       <form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
-        <div className={this.state.alertError ? 'alert alert-danger' : 'd-none'} role="alert">
-          Missing file tile or attached file
+        <div className={
+          this.state.alertError ? 'alert alert-danger alert-dismissible fade show' : 'd-none'} 
+          role="alert">
+          Missing file tile or attached file!
         </div>
-        <div className={this.state.alertSuccess ? 'alert alert-success' : 'd-none'} role="alert">
-          Successfully uploaded {this.state.title}
+        <div className={
+          this.state.alertSuccess ? 'alert alert-success alert-dismissible fade show' : 'd-none'} 
+          role="alert">
+          Successfully uploaded {this.state.title}!
         </div>
         <div className="form-group offset-sm-4 col-sm-4">
           <div style={this.getStyle()}>
             <label htmlFor="imageTitle">Image Title</label>
             <input type="text" name="title" className="form-control" 
-              onChange={this.onChangeTitle} placeholder="Enter a descriptive title" id="imageTitle" required/>
+              onChange={this.onChangeTitle} placeholder="Enter a descriptive title" id="imageTitle"/>
             <small className="text-muted">*Please enter a title without any spaces</small>
           </div>
           <div style={this.getStyle()}>
             <input type="file" name="upload" className="form-control-file" onChange={this.onChangeFile} id="selectFile" />
             <small className="text-muted">*Only .png, .jpeg, or jpg files</small>
           </div>
-          <input type="submit" disabled={this.state.disabled} className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
+          <input type="submit" className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
         </div>
       </form>
     )
