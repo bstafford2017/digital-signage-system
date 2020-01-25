@@ -6,7 +6,9 @@ export class Upload extends Component {
   state = {
     title: null,
     file: null,
-    disabled: true
+    disabled: true,
+    alertSuccess: false,
+    alertError: false,
   }
 
   onChangeBoth = () => {
@@ -35,6 +37,8 @@ export class Upload extends Component {
       console.log(this.state.title + " " + this.state.file)
       if(this.state.title && this.state.file){
         this.onChangeBoth()
+      } else {
+        this.setState({ alertError: true, alertSuccess: false })
       }
     })
   }
@@ -42,16 +46,24 @@ export class Upload extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     if(this.state.title && this.state.file){
+      this.setState({ alertError: false, alertSuccess: true })
+
       // Call submit function in App.js
       this.props.submit(this.state.title, this.state.file)
     } else {
-      alert('Missing file title or attached file!')
+      this.setState({ alertError: true, alertSuccess: false })
     }
   }
 
   render() {
     return (
       <form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
+        <div className={this.state.alertError ? 'alert alert-danger' : 'd-none'} role="alert">
+          Missing file tile or attached file
+        </div>
+        <div className={this.state.alertSuccess ? 'alert alert-success' : 'd-none'} role="alert">
+          Successfully uploaded {this.state.title}
+        </div>
         <div className="form-group offset-sm-4 col-sm-4">
           <div style={this.getStyle()}>
             <label htmlFor="imageTitle">Image Title</label>
