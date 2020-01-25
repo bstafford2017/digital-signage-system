@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export class Upload extends Component {
+
   state = {
     title: null,
     file: null,
-    disabled: false
+    disabled: true
   }
 
-  displayButton = () => {
+  onChangeBoth = () => {
     this.setState({ 
-      title: this.state.title,
-      file: this.state.file,
       disabled: false
     })
   }
@@ -23,34 +22,30 @@ export class Upload extends Component {
   }
 
   onChangeTitle = (event) => {
-    this.setState({ 
-      title: event.target.value,
-      file: null,
-      disabled: this.state.disabled
+    this.setState({ title: event.target.value }, () => {
+      console.log(this.state.title + " " + this.state.file)
+      if(this.state.title && this.state.file){
+        this.onChangeBoth()
+      }
     })
-    if(this.state.title && this.state.file){
-      this.displayButton()
-    }
   }
 
   onChangeFile = (event) => {
-    this.setState({ 
-      title: this.state.title,
-      file: event.target.files[0],
-      disabled: this.state.disabled
+    this.setState({ file: event.target.files[0] }, () => {
+      console.log(this.state.title + " " + this.state.file)
+      if(this.state.title && this.state.file){
+        this.onChangeBoth()
+      }
     })
-    if(this.state.title && this.state.file){
-      this.displayButton()
-    }
   }
 
   onSubmit = (event) => {
     event.preventDefault()
-    if(this.state.file === null || this.state.title == null){
+    if(this.state.title && this.state.file){
       // Call submit function in App.js
       this.props.submit(this.state.title, this.state.file)
     } else {
-      alert('Missing file tile or attached file!')
+      alert('Missing file title or attached file!')
     }
   }
 
@@ -68,7 +63,7 @@ export class Upload extends Component {
             <input type="file" name="upload" className="form-control-file" onChange={this.onChangeFile} id="selectFile" />
             <small className="text-muted">*Only .png, .jpeg, or jpg files</small>
           </div>
-          <input type="submit" className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
+          <input type="submit" disabled={this.state.disabled} className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
         </div>
       </form>
     )
