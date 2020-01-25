@@ -16,8 +16,23 @@ class App extends Component {
 
   // Get uploads on load
   componentDidMount() {
-    axios.get('../../routes/api/uploads.js')
-      .then(res => this.setState({ titles: res.data }))
+    axios.get('/api/upload')
+      .then(res => {
+        // ** Change to blank response
+        if(res.data.msg !== 'No Files uploaded yet!'){
+          this.setState({ titles: res.data })
+        }
+      })
+      console.log(this.state)
+  }
+
+  submit(title, file) {
+    const data = new FormData()
+    data.append('file', file)
+    data.append('title', title)
+    console.log(data)
+    axios.post('/api/upload', data, { title })
+      .then(res => console.log(res.data))//this.setState({ titles: [...this.state.titles, title] }))
   }
 
   render() {
@@ -25,7 +40,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <Route exact path="/" component={Upload} />
+          <Route exact path="/" render={props => (
+            <Upload submit={this.submit} />
+          )}/>
           <Route exact path="/edit" render={props => (
             <ItemList titles={this.state.titles}/>
           )}/>

@@ -23,19 +23,24 @@ router.get('/', (req, res) => {
 
 // Create a file
 router.post('/', (req, res) => {
-  const file = req.files.upload
 
-  if(!file){
-    res.json({ msg:'No file found when attempting to upload' })
+  if(!req.files){
+    return res.status(400).json({ msg:'No file found when attempting to upload' })
   }
 
-  console.log(file.name)
+  const file = req.files.file
+  const title = req.body.title
 
   const extname = path.extname(file.name).toLowerCase()
 
   if(extname === '.png' || extname === '.jpeg' || extname === '.jpg'){
-    file.mv(`${__dirname}/images/${req.params.title}${extname}`, (err) => res.json({ msg: `Error: ${err}` }))
-    res.json({ msg: 'File uploaded!'})
+    const fileName = title + extname
+    file.mv(`/home/ben/Desktop/digital-signage-system/uploads/${fileName}`, (err) => {
+      if(err) 
+        res.json({ msg: `Error: ${err}` })
+      else 
+        res.json({ msg: 'Success!' })
+    })
   } else {
     res.status(400).json({ msg: 'File must be a .png, .jpeg, or .jpg' })
   }
