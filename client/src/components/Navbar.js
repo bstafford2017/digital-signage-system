@@ -15,10 +15,7 @@ export class Navbar extends Component {
               <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/upload">Upload</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/edit">Edit</Link>
+              <Link className="nav-link" to="/modify">Modify</Link>
             </li>
           </ul>
         </div>

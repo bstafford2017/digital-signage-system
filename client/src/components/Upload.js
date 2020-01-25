@@ -46,10 +46,10 @@ export class Upload extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     if(this.state.title && this.state.file){
-      this.setState({ alertError: false, alertSuccess: true })
-
-      // Call submit function in App.js
-      this.props.submit(this.state.title, this.state.file)
+      this.setState({ alertError: false, alertSuccess: true }, () => {
+        // Call submit function in App.js
+        this.props.submit(this.state.title, this.state.file)
+      })
     } else {
       this.setState({ alertError: true, alertSuccess: false })
     }
@@ -77,7 +77,7 @@ export class Upload extends Component {
           </div>
           <div style={this.getStyle()}>
             <input type="file" name="upload" className="form-control-file" onChange={this.onChangeFile} id="selectFile" />
-            <small className="text-muted">*Only .png, .jpeg, or jpg files</small>
+            <small className="text-muted">*Only .png, .jpeg, or .jpg files</small>
           </div>
           <input type="submit" className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
         </div>

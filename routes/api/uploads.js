@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const router = express.Router()
 
-const uploadPath = '../../uploads'
+const uploadPath = '/home/ben/Desktop/digital-signage-system/uploads'
 
 // Get all files
 router.get('/', (req, res) => {
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 
   if(extname === '.png' || extname === '.jpeg' || extname === '.jpg'){
     const fileName = title + extname
-    file.mv(`/home/ben/Desktop/digital-signage-system/uploads/${fileName}`, (err) => {
+    file.mv(`${uploadPath}/${fileName}`, (err) => {
       if(err) 
         res.json({ msg: `Error: ${err}` })
       else 
@@ -48,9 +48,9 @@ router.post('/', (req, res) => {
 
 // Delete a file
 router.delete('/', (req, res) => {
-  const title = req.params.title
+  const title = req.body.title
   if(fs.existsSync(uploadsPath)){
-    fs.unlink(uploadsPath, (err) => res.json({ msg: `Error: ${err}` }))
+    fs.unlink(`${uploadPath}/${title}`, (err) => res.json({ msg: `Error: ${err}` }))
   } else {
     res.json({ msg: `No file with title of ${title}` })
   }
