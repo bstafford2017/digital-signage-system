@@ -20,7 +20,8 @@ class App extends Component {
     displayModal: false,
     modalResponse: null,
     success: false,
-    error: false
+    error: false,
+    uploadedTitle: null
   }
 
   // Get uploads on load
@@ -53,8 +54,8 @@ class App extends Component {
     this.setState({ success: false, error: false })
   }
 
-  alertSuccess = () => {
-    this.setState({ success: true, error: false })
+  alertSuccess = (title) => {
+    this.setState({ uploadedTitle: title, success: true, error: false }, () => {return})
   }
 
   alertError = () => {
@@ -100,7 +101,7 @@ class App extends Component {
                 </Alert>
                 <Alert color="success" isOpen={this.state.success} 
                   style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                  Successfully uploaded {this.state.title}!
+                  Successfully uploaded {this.state.uploadedTitle}!
                 </Alert>
               </Col>
               <Overwrite continue={this.modalContinue} close={this.modalClose} displayModal={this.state.displayModal} />

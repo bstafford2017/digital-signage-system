@@ -18,6 +18,7 @@ export class Upload extends Component {
   }
 
   onChangeTitle = (event) => {
+    event.target.value = event.target.value.replace(' ', '-')
     this.setState({ title: event.target.value }, () => {
       console.log(this.state.title + " " + this.state.file)
       if(this.state.title && this.state.file){
@@ -38,11 +39,12 @@ export class Upload extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     if(this.state.title && this.state.file){
-      this.setState({ title: this.state.title + path.extname(this.state.file.name).toLowerCase() })
-      // Call submit function in App.js
-      if(this.props.submit(this.state.title, this.state.file)){
-        this.props.success()
-      }
+      this.setState({ title: this.state.title + path.extname(this.state.file.name).toLowerCase() }, () => {
+        // Call submit function in App.js
+        if(this.props.submit(this.state.title, this.state.file)){
+          this.props.success(this.state.title)
+        }
+      })
     } else {
       this.props.error()
     }
@@ -56,9 +58,6 @@ export class Upload extends Component {
             <Label htmlFor="imageTitle">Image Title</Label>
             <Input type="text" name="title" id="imageTitle" 
             onChange={this.onChangeTitle} placeholder="Enter a descriptive title" />
-            <FormText color="muted">
-              *Please enter a title without any spaces
-            </FormText>
           </FormGroup>
           <FormGroup style={{margin: '30px 0px'}}>
             <Input type="file" name="upload" onChange={this.onChangeFile} />
