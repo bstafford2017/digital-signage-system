@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
+import path from 'path'
 import PropTypes from 'prop-types'
+import { Form, FormGroup, Label, Input, FormText, Button, Col } from 'reactstrap'
 
 export class Upload extends Component {
 
   state = {
     title: null,
     file: null,
-    disabled: true,
-    alertSuccess: false,
-    alertError: false,
-  }
-
-  getStyle = () => {
-    return {
-      margin: '30px 0px'
-    }
+    disabled: true
   }
 
   onChangeBoth = () => {
@@ -28,7 +22,7 @@ export class Upload extends Component {
       console.log(this.state.title + " " + this.state.file)
       if(this.state.title && this.state.file){
         this.onChangeBoth()
-      }
+      } 
     })
   }
 
@@ -37,8 +31,6 @@ export class Upload extends Component {
       console.log(this.state.title + " " + this.state.file)
       if(this.state.title && this.state.file){
         this.onChangeBoth()
-      } else {
-        this.setState({ alertError: true, alertSuccess: false })
       }
     })
   }
@@ -46,42 +38,39 @@ export class Upload extends Component {
   onSubmit = (event) => {
     event.preventDefault()
     if(this.state.title && this.state.file){
-      this.setState({ alertError: false, alertSuccess: true }, () => {
-        // Call submit function in App.js
-        this.props.submit(this.state.title, this.state.file)
-      })
+      this.setState({ title: this.state.title + path.extname(this.state.file.name).toLowerCase() })
+      // Call submit function in App.js
+      if(this.props.submit(this.state.title, this.state.file)){
+        this.props.success()
+      }
     } else {
-      this.setState({ alertError: true, alertSuccess: false })
+      this.props.error()
     }
   }
 
   render() {
     return (
-      <form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
-        <div className={
-          this.state.alertError ? 'alert alert-danger alert-dismissible fade show' : 'd-none'} 
-          role="alert">
-          Missing file tile or attached file!
-        </div>
-        <div className={
-          this.state.alertSuccess ? 'alert alert-success alert-dismissible fade show' : 'd-none'} 
-          role="alert">
-          Successfully uploaded {this.state.title}!
-        </div>
-        <div className="form-group offset-sm-4 col-sm-4">
-          <div style={this.getStyle()}>
-            <label htmlFor="imageTitle">Image Title</label>
-            <input type="text" name="title" className="form-control" 
-              onChange={this.onChangeTitle} placeholder="Enter a descriptive title" id="imageTitle"/>
-            <small className="text-muted">*Please enter a title without any spaces</small>
-          </div>
-          <div style={this.getStyle()}>
-            <input type="file" name="upload" className="form-control-file" onChange={this.onChangeFile} id="selectFile" />
-            <small className="text-muted">*Only .png, .jpeg, or .jpg files</small>
-          </div>
-          <input type="submit" className="btn btn-dark offset-sm-5 col-sm-2" value="Upload" required/>
-        </div>
-      </form>
+      <Form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
+        <Col sm={{size: 4, offset:4}}>
+          <FormGroup style={{margin: '30px 0px'}}>
+            <Label htmlFor="imageTitle">Image Title</Label>
+            <Input type="text" name="title" id="imageTitle" 
+            onChange={this.onChangeTitle} placeholder="Enter a descriptive title" />
+            <FormText color="muted">
+              *Please enter a title without any spaces
+            </FormText>
+          </FormGroup>
+          <FormGroup style={{margin: '30px 0px'}}>
+            <Input type="file" name="upload" onChange={this.onChangeFile} />
+            <FormText color="muted">
+              *Only .png, .jpeg, or .jpg files
+            </FormText>
+          </FormGroup>
+          <Col sm={{size: 2, offset:5}}>
+            <Button color="dark" value="Upload">Upload</Button>
+          </Col>
+        </Col>
+      </Form>
     )
   }
 }
@@ -89,5 +78,7 @@ export class Upload extends Component {
 export default Upload
 
 Upload.propTypes = {
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  success: PropTypes.func.isRequired,
+  error: PropTypes.func.isRequired
 }
