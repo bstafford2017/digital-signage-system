@@ -9,6 +9,7 @@ export class Item extends Component {
 
   delete = () => {
     this.setState({ displayCard: false })
+    this.props.delete(this.props.file)
   }
   
   render() {
