@@ -79,12 +79,17 @@ class App extends Component {
       data.append('file', file)
       data.append('title', title)
       axios.post('/api/upload', data, { title })
-        .then(res => console.log(res.data))//this.setState({ titles: [...this.state.titles, title] }))
+        .then(res => this.setState({ titles: [...this.state.titles, title] }))
       return true
     }
     this.title = title
     this.file = file
     return false
+  }
+
+  delete = (title) => {
+    axios.delete(`/api/upload/${title}`)
+      .then(res => this.setState({todos: [...this.state.todos.filter(stateTitle => stateTitle !== title)]}))
   }
 
   render() {
@@ -108,8 +113,8 @@ class App extends Component {
               <Upload success={this.alertSuccess} error={this.alertError} submit={this.submit} />
             </React.Fragment>
           )}/>
-          <Route exact path="/edit" render={props => (
-            <ItemList titles={this.state.titles}/>
+          <Route exact path="/modify" render={props => (
+            <ItemList titles={this.state.titles} delete={this.delete}/>
           )}/>
           <Footer />
         </div>

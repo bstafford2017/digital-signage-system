@@ -47,8 +47,9 @@ router.post('/', (req, res) => {
 })
 
 // Delete a file
-router.delete('/', (req, res) => {
-  const title = req.body.title
+router.delete('/${title}', (req, res) => {
+  const title = req.params.title
+  console.log(title)
   if(fs.existsSync(uploadsPath)){
     fs.unlink(`${uploadPath}/${title}`, (err) => res.json({ msg: `Error: ${err}` }))
   } else {

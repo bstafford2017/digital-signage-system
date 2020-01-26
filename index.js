@@ -12,6 +12,8 @@ app.use(logger)
 // Middleware for body parsing uploaded files
 app.use(fileupload())
 
+app.use('/img', express.static(__dirname + '/uploads'));
+
 // Use routes for uploads
 app.use('/api/upload', require('./routes/api/uploads'))
 
