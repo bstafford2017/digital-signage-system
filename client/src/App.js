@@ -86,7 +86,7 @@ class App extends Component {
   }
 
   delete = (file) => {
-    console.log('deleted function')
+    console.log(file)
     axios.delete(`/api/upload/${file.title}`)
       .then(res => this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]}))
   }
