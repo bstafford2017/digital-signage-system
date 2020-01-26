@@ -14,9 +14,9 @@ class App extends Component {
   file = null
   title = null
 
-  // Setup state to hold titles
+  // Setup state to hold files
   state = {
-    titles: [],
+    files: [],
     displayModal: false,
     modalResponse: null,
     success: false,
@@ -30,7 +30,7 @@ class App extends Component {
       .then(res => {
         // ** Change to blank response
         if(res.data.msg !== 'No Files uploaded yet!'){
-          this.setState({ titles: res.data })
+          this.setState({ files: res.data })
         }
       })
   }
@@ -46,7 +46,7 @@ class App extends Component {
     data.append('file', this.file)
     data.append('title', this.title)
     axios.post('/api/upload', data, { title: this.title })
-      .then(res => console.log(res.data))//this.setState({ titles: [...this.state.titles, title] }))
+      .then(res => this.setState({ files: [...this.state.files, this.title] }))
     this.setState({ modalResponse: 'continue' })
   }
 
@@ -63,11 +63,9 @@ class App extends Component {
   }
 
   submit = (title, file) => {
-    if(this.state.titles.some((stateTitle) => stateTitle === title + path.extname(file.name).toLowerCase())){
+    if(this.state.files.some((stateTitle) => stateTitle === title + path.extname(file.name).toLowerCase())){
       this.setState({ displayModal: true }, () => {
         // Wait for modal response
-        //while(!this.state.modalResponse){}
-        console.log('done looping ' + this.state.modalResponse)
         if(this.state.modalResponse === 'continue'){
           return true
         } else if(this.state.modalResponse === 'close'){
@@ -79,7 +77,7 @@ class App extends Component {
       data.append('file', file)
       data.append('title', title)
       axios.post('/api/upload', data, { title })
-        .then(res => this.setState({ titles: [...this.state.titles, title] }))
+        .then(res => this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] }))
       return true
     }
     this.title = title
@@ -87,9 +85,10 @@ class App extends Component {
     return false
   }
 
-  delete = (title) => {
-    axios.delete(`/api/upload/${title}`)
-      .then(res => this.setState({todos: [...this.state.todos.filter(stateTitle => stateTitle !== title)]}))
+  delete = (file) => {
+    console.log('deleted function')
+    axios.delete(`/api/upload/${file.title}`)
+      .then(res => this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]}))
   }
 
   render() {
@@ -114,7 +113,7 @@ class App extends Component {
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (
-            <ItemList titles={this.state.titles} delete={this.delete}/>
+            <ItemList files={this.state.files} delete={this.delete}/>
           )}/>
           <Footer />
         </div>

@@ -16,7 +16,12 @@ router.get('/', (req, res) => {
         res.status(500).json({ msg: `Error: ${err}` })
       }
     } else {
-      res.json(files)
+      const fileWithData = []
+      files.forEach(file => {
+        const stats = fs.statSync(uploadPath + `/${file}`)
+        fileWithData.push({ title: file, date: stats.mtime.toUTCString()})
+      })
+      res.json(fileWithData)
     }
   })
 })
@@ -34,7 +39,7 @@ router.post('/', (req, res) => {
   const extname = path.extname(file.name).toLowerCase()
 
   if(extname === '.png' || extname === '.jpeg' || extname === '.jpg'){
-    const fileName = title + extname
+    const fileName = title
     file.mv(`${uploadPath}/${fileName}`, (err) => {
       if(err) 
         res.json({ msg: `Error: ${err}` })
@@ -47,10 +52,9 @@ router.post('/', (req, res) => {
 })
 
 // Delete a file
-router.delete('/${title}', (req, res) => {
+router.delete('/:title', (req, res) => {
   const title = req.params.title
-  console.log(title)
-  if(fs.existsSync(uploadsPath)){
+  if(fs.existsSync(`${uploadPath}/${title}`)){
     fs.unlink(`${uploadPath}/${title}`, (err) => res.json({ msg: `Error: ${err}` }))
   } else {
     res.json({ msg: `No file with title of ${title}` })

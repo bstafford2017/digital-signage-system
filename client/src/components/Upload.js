@@ -69,6 +69,7 @@ export class Upload extends Component {
             <Button color="dark" value="Upload">Upload</Button>
           </Col>
         </Col>
+        <p style={{height: '451px'}}></p>
       </Form>
     )
   }

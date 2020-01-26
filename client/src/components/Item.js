@@ -3,6 +3,15 @@ import PropTypes from 'prop-types'
 import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
 
 export class Item extends Component {
+  state = {
+    displayCard: true
+  }
+
+  delete = () => {
+    this.setState({ displayCard: false })
+    this.props.delete.bind(this, this.props.file)
+  }
+  
   render() {
     const btnStyle = {
       backgroundColor: '#dd0000',
@@ -16,14 +25,14 @@ export class Item extends Component {
     }
 
     return (
-      <Card style={{maxWidth: '320px', margin: '15px'}}>
-        <CardImg width="100%" height="240px" src={'/img/' + this.props.title} />
+      <Card style={{maxWidth: '320px', margin: '15px'}} className={this.state.displayCard ? '' : 'd-none'}>
+        <CardImg width="100%" height="240px" src={'/img/' + this.props.file.title} />
         <CardBody>
-        <CardTitle>{this.props.title}</CardTitle>
+        <CardTitle>{this.props.file.title}</CardTitle>
           <CardText>
-            <small className="text-muted">Last updated 3 mins ago</small>
+            <small className="text-muted">Uploaded on {this.props.file.date}</small>
           </CardText>
-          <Button style={btnStyle} onClick={this.props.delete.bind(this, this.props.title)}>&#10006;</Button>
+          <Button style={btnStyle} onClick={this.props.delete.bind(this, this.props.file)}>&#10006;</Button>
         </CardBody>
       </Card>
     )
@@ -31,7 +40,7 @@ export class Item extends Component {
 }
 
 Item.propTypes = {
-  title: PropTypes.string.isRequired,
+  file: PropTypes.object.isRequired,
   delete: PropTypes.func.isRequired
 }
 

@@ -5,8 +5,8 @@ import { Container, Row } from 'reactstrap';
 
 export class ItemList extends Component {
   render() {
-    const items = this.props.titles.map(title => 
-      <Item title={title} delete={this.props.delete}/>
+    const items = this.props.files.map(file => 
+      <Item file={file} delete={this.props.delete}/>
     )
     return (
       <Container>
@@ -19,7 +19,7 @@ export class ItemList extends Component {
 }
 
 ItemList.propTypes = {
-  titles: PropTypes.array.isRequired,
+  files: PropTypes.array.isRequired,
   delete: PropTypes.func.isRequired
 }
 
