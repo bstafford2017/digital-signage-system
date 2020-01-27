@@ -3,7 +3,8 @@ const path = require('path')
 const fs = require('fs')
 const router = express.Router()
 
-const uploadPath = '/home/ben/Desktop/digital-signage-system/uploads'
+//const uploadPath = '/home/ben/Desktop/digital-signage-system/uploads'
+const uploadPath = __dirname + '/../../uploads'
 
 // Get all files
 router.get('/', (req, res) => {
