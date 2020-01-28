@@ -1,24 +1,17 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import axios from 'axios'
-import path from 'path'
 import { Alert, Col, Container } from 'reactstrap'
 import Navbar from './components/Navbar'
 import Upload from './components/Upload'
 import ItemList from './components/ItemList'
 import Footer from './components/Footer'
-import Overwrite from './components/Overwrite'
 import './App.css';
 
 class App extends Component {
-  file = null
-  title = null
-
   // Setup state to hold files
   state = {
     files: [],
-    displayModal: false,
-    modalResponse: null,
     success: false,
     error: false,
     uploadedTitle: null
@@ -35,21 +28,6 @@ class App extends Component {
       })
   }
 
-  modalClose = () => {
-    this.setState({ displayModal: false })
-    this.setState({ modalResponse: 'close' })
-  }
-
-  modalContinue = () => {
-    this.setState({ displayModal: false })
-    const data = new FormData()
-    data.append('file', this.file)
-    data.append('title', this.title)
-    axios.post('/api/upload', data, { title: this.title })
-      .then(res => this.setState({ files: [...this.state.files, this.title] }))
-    this.setState({ modalResponse: 'continue' })
-  }
-
   removeAlert = () => {
     this.setState({ success: false, error: false })
   }
@@ -59,30 +37,15 @@ class App extends Component {
   }
 
   alertError = () => {
-    this.setState({ success: false, error: true })
+    this.setState({ success: false, error: true }, () => {return})
   }
 
   submit = (title, file) => {
-    if(this.state.files.some((stateTitle) => stateTitle === title + path.extname(file.name).toLowerCase())){
-      this.setState({ displayModal: true }, () => {
-        // Wait for modal response
-        if(this.state.modalResponse === 'continue'){
-          return true
-        } else if(this.state.modalResponse === 'close'){
-          return false
-        }
-      })
-    } else {
-      const data = new FormData()
-      data.append('file', file)
-      data.append('title', title)
-      axios.post('/api/upload', data, { title })
-        .then(res => this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] }))
-      return true
-    }
-    this.title = title
-    this.file = file
-    return false
+    const data = new FormData()
+    data.append('file', file)
+    data.append('title', title)
+    axios.post('/api/upload', data, { title })
+      .then(res => this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] }))
   }
 
   delete = (file) => {
@@ -108,8 +71,7 @@ class App extends Component {
                   Successfully uploaded {this.state.uploadedTitle}!
                 </Alert>
               </Col>
-              <Overwrite continue={this.modalContinue} close={this.modalClose} displayModal={this.state.displayModal} />
-              <Upload success={this.alertSuccess} error={this.alertError} submit={this.submit} />
+              <Upload files={this.state.files} success={this.alertSuccess} error={this.alertError} submit={this.submit} />
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (

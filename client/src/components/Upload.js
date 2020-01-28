@@ -2,46 +2,47 @@ import React, { Component } from 'react'
 import path from 'path'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Label, Input, FormText, Button, Col } from 'reactstrap'
+import Overwrite from './Overwrite'
 
 export class Upload extends Component {
 
   state = {
     title: null,
     file: null,
-    disabled: true
+    displayModal: false
   }
 
-  onChangeBoth = () => {
-    this.setState({ 
-      disabled: false
-    })
+  // Handle modal interaction
+  modalClose = () => {
+    this.setState({ displayModal: false })
   }
 
+  modalContinue = () => {
+    this.setState({ displayModal: false })
+    this.props.submit(this.state.title, this.state.file)
+    this.props.success(this.state.title)
+  }
+
+  // Handle form interaction
   onChangeTitle = (event) => {
     event.target.value = event.target.value.replace(' ', '-')
-    this.setState({ title: event.target.value }, () => {
-      console.log(this.state.title + " " + this.state.file)
-      if(this.state.title && this.state.file){
-        this.onChangeBoth()
-      } 
-    })
+    this.setState({ title: event.target.value })
   }
 
   onChangeFile = (event) => {
-    this.setState({ file: event.target.files[0] }, () => {
-      console.log(this.state.title + " " + this.state.file)
-      if(this.state.title && this.state.file){
-        this.onChangeBoth()
-      }
-    })
+    this.setState({ file: event.target.files[0] })
   }
 
   onSubmit = (event) => {
     event.preventDefault()
     if(this.state.title && this.state.file){
       this.setState({ title: this.state.title + path.extname(this.state.file.name).toLowerCase() }, () => {
-        // Call submit function in App.js
-        if(this.props.submit(this.state.title, this.state.file)){
+        // Check if title is in array
+        if(this.props.files.some(file => file.title === this.state.title)){
+          this.setState({ displayModal: true })
+        } else {
+          // Call submit function in App.js
+          this.props.submit(this.state.title, this.state.file)
           this.props.success(this.state.title)
         }
       })
@@ -52,7 +53,9 @@ export class Upload extends Component {
 
   render() {
     return (
-      <Form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
+      <React.Fragment>
+        <Overwrite display={this.state.displayModal} continue={this.modalContinue} close={this.modalClose} />
+        <Form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
         <Col sm={{size: 4, offset:4}}>
           <FormGroup style={{margin: '30px 0px'}}>
             <Label htmlFor="imageTitle">Image Title</Label>
@@ -69,8 +72,9 @@ export class Upload extends Component {
             <Button color="dark" value="Upload">Upload</Button>
           </Col>
         </Col>
-        <p style={{height: '451px'}}></p>
+        <p style={{minHeight: '451px'}}></p>
       </Form>
+      </React.Fragment>
     )
   }
 }
@@ -78,6 +82,7 @@ export class Upload extends Component {
 export default Upload
 
 Upload.propTypes = {
+  files: PropTypes.array.isRequired,
   submit: PropTypes.func.isRequired,
   success: PropTypes.func.isRequired,
   error: PropTypes.func.isRequired

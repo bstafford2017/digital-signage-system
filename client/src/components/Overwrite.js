@@ -6,7 +6,7 @@ export class Overwrite extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.displayModal}>
+      <Modal isOpen={this.props.display}>
         <ModalHeader>Overwrite file?</ModalHeader>
         <ModalBody>
           If you want to overwrite the current file with this title, 
@@ -22,7 +22,7 @@ export class Overwrite extends Component {
 }
 
 Overwrite.propTypes = {
-  displayModal: PropTypes.bool.isRequired,
+  display: PropTypes.bool.isRequired,
   continue: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired
 }
