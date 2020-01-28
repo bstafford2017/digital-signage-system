@@ -262,3 +262,4 @@
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:26:49 pm
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:27:19 pm
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:27:30 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:28:16 pm

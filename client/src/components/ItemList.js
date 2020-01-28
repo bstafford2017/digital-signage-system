@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Item from './Item'
-import { Fade, Row, Alert } from 'reactstrap';
+import { Row, Alert } from 'reactstrap';
 
 export class ItemList extends Component {
   render() {
