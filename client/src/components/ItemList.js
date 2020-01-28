@@ -5,19 +5,21 @@ import { Row, Alert } from 'reactstrap';
 
 export class ItemList extends Component {
   render() {
-    let items
-    if(this.props.files.length > 0){
-      items = this.props.files.map(file => 
-        <Item file={file} delete={this.props.delete}/>
+    // If no files in uploads folder
+    if(this.props.files.length === 0){
+      return (
+        <Alert color="dark" className="text-center col-sm-4 offset-sm-4" style={{marginTop: '80px'}}>There are no files uploaded yet!</Alert>
       )
-    } else {
-      items = <Alert color="dark" className="text-center col-sm-4 offset-sm-4" style={{marginTop: '80px'}}>There are no files uploaded yet!</Alert>
     }
+
     return (
       <Row sm="2">
-        {items}
+        {this.props.files.map(file => 
+          <Item file={file} delete={this.props.delete} />
+        )}
       </Row>
     )
+
   }
 }
 
