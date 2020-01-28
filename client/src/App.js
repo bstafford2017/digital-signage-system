@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import axios from 'axios'
-import { Alert, Col, Container } from 'reactstrap'
+import { Alert, Col, Container, Fade } from 'reactstrap'
 import Navbar from './components/Navbar'
 import Upload from './components/Upload'
 import ItemList from './components/ItemList'
@@ -61,23 +61,27 @@ class App extends Component {
           <Navbar />
           <Route exact path="/" render={props => (
             <React.Fragment>
-              <Col sm={{size: 6, offset: 3}}>
-                <Alert color="danger" isOpen={this.state.error} 
-                  style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                  Missing file title or attached file!
-                </Alert>
-                <Alert color="success" isOpen={this.state.success} 
-                  style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                  Successfully uploaded {this.state.uploadedTitle}!
-                </Alert>
-              </Col>
-              <Upload files={this.state.files} success={this.alertSuccess} error={this.alertError} submit={this.submit} />
+              <Fade in={true}>
+                <Col sm={{size: 6, offset: 3}}>
+                  <Alert color="danger" isOpen={this.state.error} 
+                    style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
+                    Missing file title or attached file!
+                  </Alert>
+                  <Alert color="success" isOpen={this.state.success} 
+                    style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
+                    Successfully uploaded {this.state.uploadedTitle}!
+                  </Alert>
+                </Col>
+                <Upload files={this.state.files} success={this.alertSuccess} error={this.alertError} submit={this.submit} />
+              </Fade>
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (
-            <Container style={{minHeight: '718px'}}>
-              <ItemList files={this.state.files} delete={this.delete} />
-            </Container>
+            <Fade in={true}>
+              <Container style={{minHeight: '718px'}}>
+                <ItemList files={this.state.files} delete={this.delete} />
+              </Container>
+            </Fade>
           )}/>
           <Footer />
         </div>

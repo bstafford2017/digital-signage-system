@@ -252,3 +252,13 @@
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:16:24 pm
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:17:03 pm
 [GET] http://localhost:5000/api/upload: January 28th 2020, 4:17:09 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:23:03 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:24:26 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:25:08 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:25:12 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:25:51 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:25:54 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:26:20 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:26:49 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:27:19 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 4:27:30 pm
