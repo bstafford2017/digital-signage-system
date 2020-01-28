@@ -23,7 +23,7 @@ class App extends Component {
       .then(res => {
         // ** Change to blank response
         if(res.data.msg !== 'No Files uploaded yet!'){
-          this.setState({ files: res.data })
+          this.setState({ files: [] })
         }
       })
   }

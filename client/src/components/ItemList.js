@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Item from './Item'
-import { Container, Row } from 'reactstrap';
+import { Container, Row, Alert } from 'reactstrap';
 
 export class ItemList extends Component {
   render() {
-    const items = this.props.files.map(file => 
-      <Item file={file} delete={this.props.delete}/>
-    )
+    let items
+    if(this.props.files.length > 0){
+      items = this.props.files.map(file => 
+        <Item file={file} delete={this.props.delete}/>
+      )
+    } else {
+      items = <Alert color="dark" className="text-center col-sm-4 offset-sm-4" style={{marginTop: '80px'}}>There are no files uploaded yet!</Alert>
+    }
     return (
       <Container>
         <Row sm="2">
