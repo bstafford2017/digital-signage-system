@@ -37,9 +37,9 @@ router.post('/', (req, res) => {
   const file = req.files.file
   const title = req.body.title
 
-  const extname = path.extname(file.name).toLowerCase()
+  //const extname = path.extname(file.name).toLowerCase()
 
-  if(extname === '.png' || extname === '.jpeg' || extname === '.jpg'){
+  if(title.includes('.png') || title.includes('.jpeg') || title.includes('.jpg')){
     const fileName = title
     file.mv(`${uploadPath}/${fileName}`, (err) => {
       if(err) 

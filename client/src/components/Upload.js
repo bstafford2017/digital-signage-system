@@ -21,6 +21,11 @@ export class Upload extends Component {
     this.setState({ displayModal: false })
     this.props.submit(this.state.title, this.state.file)
     this.props.success(this.state.title)
+
+    // Reset state
+    document.getElementById('imageTitle').value = ''
+    document.getElementById('file').value = null
+    this.setState({ title: null, file: null, displayModal: false })
   }
 
   // Handle form interaction
@@ -44,6 +49,11 @@ export class Upload extends Component {
           // Call submit function in App.js
           this.props.submit(this.state.title, this.state.file)
           this.props.success(this.state.title)
+
+          // Reset state
+          document.getElementById('imageTitle').value = ''
+          document.getElementById('file').value = null
+          this.setState({ title: null, file: null, displayModal: false })
         }
       })
     } else {
@@ -63,7 +73,7 @@ export class Upload extends Component {
             onChange={this.onChangeTitle} placeholder="Enter a descriptive title" />
           </FormGroup>
           <FormGroup style={{margin: '30px 0px'}}>
-            <Input type="file" name="upload" onChange={this.onChangeFile} />
+            <Input type="file" name="upload" onChange={this.onChangeFile} id="file" />
             <FormText color="muted">
               *Only .png, .jpeg, or .jpg files
             </FormText>
