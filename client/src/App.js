@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import axios from 'axios'
 import path from 'path'
-import { Alert, Col } from 'reactstrap'
+import { Alert, Col, Container } from 'reactstrap'
 import Navbar from './components/Navbar'
 import Upload from './components/Upload'
 import ItemList from './components/ItemList'
@@ -113,7 +113,9 @@ class App extends Component {
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (
-            <ItemList files={this.state.files} delete={this.delete}/>
+            <Container style={{minHeight: '718px'}}>
+              <ItemList files={this.state.files} delete={this.delete} />
+            </Container>
           )}/>
           <Footer />
         </div>
