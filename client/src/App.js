@@ -22,7 +22,7 @@ class App extends Component {
     axios.get('/api/upload')
       .then(res => {
         // ** Change to blank response
-        if(res.data.msg !== 'No Files uploaded yet!'){
+        if(res.data.msg !== 'No files uploaded yet'){
           this.setState({ files: res.data })
         } else {
           this.setState({ files: [] })
