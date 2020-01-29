@@ -1,4 +1,4 @@
 node_modules
-logs/log.txt
+logs
 uploads
 client/build

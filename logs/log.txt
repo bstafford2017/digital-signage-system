@@ -355,3 +355,12 @@
 [GET] http://localhost:5000/img/asdfsadf.jpg: January 28th 2020, 5:39:10 pm
 [GET] http://localhost:5000/img/chicago.jpg: January 28th 2020, 5:39:10 pm
 [GET] http://localhost:5000/img/test.jpg: January 28th 2020, 5:39:10 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:04:37 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:08:13 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:08:16 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:08:32 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:08:42 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:08:54 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:09:07 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:09:17 pm
+[GET] http://localhost:5000/api/upload: January 28th 2020, 10:09:18 pm
