@@ -1,5 +1,5 @@
-node_modules
-logs/log.txt
-uploads
-client/build
-client/node_modules
+node_modules/
+logs/
+uploads/
+client/build/
+client/node_modules/
