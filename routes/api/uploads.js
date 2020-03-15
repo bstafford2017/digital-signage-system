@@ -1,9 +1,7 @@
 const express = require('express')
-const path = require('path')
 const fs = require('fs')
 const router = express.Router()
 
-//const uploadPath = '/home/ben/Desktop/digital-signage-system/uploads'
 const uploadPath = __dirname + '/../../uploads'
 
 // Get all files
@@ -12,9 +10,9 @@ router.get('/', (req, res) => {
     if(err){
       if(err.code === 'ENOENT'){
         // Page not found
-        res.json({ msg: `No files uploaded yet` })
+        res.status(400).json({ msg: `No files uploaded yet` })
       } else {
-        res.status(500).json({ msg: `Error: ${err}` })
+        res.status(400).json({ msg: `Error: ${err}` })
       }
     } else {
       const fileWithData = []
@@ -37,13 +35,17 @@ router.post('/', (req, res) => {
   const file = req.files.file
   const title = req.body.title
 
-  //const extname = path.extname(file.name).toLowerCase()
-
   if(title.includes('.png') || title.includes('.jpeg') || title.includes('.jpg')){
     const fileName = title
+
+    // Check if uploads folder exists
+    if(!fs.existsSync('./uploads')){
+      fs.mkdirSync('./uploads')
+    }
+
     file.mv(`${uploadPath}/${fileName}`, (err) => {
       if(err) 
-        res.json({ msg: `Error: ${err}` })
+        res.status(400).json({ msg: `Error: ${err}` })
       else 
         res.json({ msg: 'Success!' })
     })
@@ -58,7 +60,7 @@ router.delete('/:title', (req, res) => {
   if(fs.existsSync(`${uploadPath}/${title}`)){
     fs.unlink(`${uploadPath}/${title}`, (err) => res.json({ msg: `Error: ${err}` }))
   } else {
-    res.json({ msg: `No file with title of ${title}` })
+    res.status(400).json({ msg: `No file with title of ${title}` })
   }
 })
 
