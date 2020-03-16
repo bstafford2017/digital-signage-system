@@ -23,7 +23,7 @@ export class Item extends Component {
       <Card style={{maxWidth: '320px', margin: '15px'}} className={this.state.displayCard ? '' : 'd-none'}>
         <CardImg width="100%" height="240px" src={'/img/' + this.props.file.title} />
         <CardBody>
-        <CardTitle>{this.props.file.title}</CardTitle>
+          <CardTitle>{this.props.file.title}</CardTitle>
           <CardText>
             <small className="text-muted">Uploaded on {this.props.file.date}</small>
           </CardText>
