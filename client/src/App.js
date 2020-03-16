@@ -77,9 +77,11 @@ class App extends Component {
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (
-            <Container style={{minHeight: '718px'}}>
-              <ItemList files={this.state.files} delete={this.delete} />
-            </Container>
+            <Fade in={true}>
+              <Container style={{minHeight: '718px'}}>
+                <ItemList files={this.state.files} delete={this.delete} />
+              </Container>
+            </Fade>
           )}/>
           <Footer />
         </div>
