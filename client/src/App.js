@@ -44,13 +44,13 @@ class App extends Component {
     const data = new FormData()
     data.append('file', file)
     data.append('title', title)
-    const res = await axios.post('/api/upload', data, { title })
+    await axios.post('/api/upload', data, { title })
     this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] })
   }
 
   delete = async (file) => {
     console.log(file)
-    const res = await axios.delete(`/api/upload/${file.title}`)
+    await axios.delete(`/api/upload/${file.title}`)
     this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]})
   }
 

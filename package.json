@@ -4,10 +4,10 @@
   "description": "Digital signage system for the SEECS department at UND.",
   "main": "index.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "client-install": "npm install --prefix ./client/node_modules",
     "start": "node index.js",
     "server": "nodemon index.js",
-    "client": "npm start --prefix client",
+    "client": "npm start --prefix ./client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
