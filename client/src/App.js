@@ -18,16 +18,14 @@ class App extends Component {
   }
 
   // Get uploads on load
-  componentDidMount() {
-    axios.get('/api/upload')
-      .then(res => {
-        // ** Change to blank response
-        if(res.data.msg !== 'No files uploaded yet'){
-          this.setState({ files: res.data })
-        } else {
-          this.setState({ files: [] })
-        }
-      })
+  async componentDidMount() {
+    const res = await axios.get('/api/upload')
+    // ** Change to blank response
+    if(res.data.msg !== 'No files uploaded yet'){
+      this.setState({ files: res.data })
+    } else {
+      this.setState({ files: [] })
+    }
   }
 
   removeAlert = () => {
@@ -42,18 +40,18 @@ class App extends Component {
     this.setState({ success: false, error: true }, () => {return})
   }
 
-  submit = (title, file) => {
+  submit = async (title, file) => {
     const data = new FormData()
     data.append('file', file)
     data.append('title', title)
-    axios.post('/api/upload', data, { title })
-      .then(res => this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] }))
+    const res = await axios.post('/api/upload', data, { title })
+    this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] })
   }
 
-  delete = (file) => {
+  delete = async (file) => {
     console.log(file)
-    axios.delete(`/api/upload/${file.title}`)
-      .then(res => this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]}))
+    const res = await axios.delete(`/api/upload/${file.title}`)
+    this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]})
   }
 
   render() {
@@ -79,11 +77,9 @@ class App extends Component {
             </React.Fragment>
           )}/>
           <Route exact path="/modify" render={props => (
-            <Fade in={true}>
               <Container style={{minHeight: '718px'}}>
                 <ItemList files={this.state.files} delete={this.delete} />
               </Container>
-            </Fade>
           )}/>
           <Footer />
         </div>
