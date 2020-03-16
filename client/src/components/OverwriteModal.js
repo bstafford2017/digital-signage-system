@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import PropTypes from 'prop-types'
 
-export class Overwrite extends Component {
+export class OverwriteModal extends Component {
 
   render() {
     return (
@@ -21,10 +21,10 @@ export class Overwrite extends Component {
   }
 }
 
-Overwrite.propTypes = {
+OverwriteModal.propTypes = {
   display: PropTypes.bool.isRequired,
   continue: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired
 }
 
-export default Overwrite
+export default OverwriteModal

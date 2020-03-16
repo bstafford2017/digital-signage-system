@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import path from 'path'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Label, Input, FormText, Button, Col } from 'reactstrap'
-import Overwrite from './Overwrite'
+import OverwriteModal from './OverwriteModal'
 
 export class Upload extends Component {
 
@@ -64,7 +64,7 @@ export class Upload extends Component {
   render() {
     return (
       <React.Fragment>
-        <Overwrite display={this.state.displayModal} continue={this.modalContinue} close={this.modalClose} />
+        <OverwriteModal display={this.state.displayModal} continue={this.modalContinue} close={this.modalClose} />
         <Form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
         <Col sm={{size: 4, offset:4}}>
           <FormGroup style={{margin: '30px 0px'}}>
