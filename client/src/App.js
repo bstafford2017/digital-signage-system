@@ -60,21 +60,19 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Route exact path="/" render={props => (
-            <React.Fragment>
-              <Fade in={true}>
-                <Col sm={{size: 6, offset: 3}}>
-                  <Alert color="danger" isOpen={this.state.error} 
-                    style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                    Missing file title or attached file!
-                  </Alert>
-                  <Alert color="success" isOpen={this.state.success} 
-                    style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                    Successfully uploaded {this.state.uploadedTitle}!
-                  </Alert>
-                </Col>
-                <Upload files={this.state.files} success={this.alertSuccess} error={this.alertError} submit={this.submit} />
-              </Fade>
-            </React.Fragment>
+            <Fade in={true}>
+              <Col sm={{size: 6, offset: 3}}>
+                <Alert color="danger" isOpen={this.state.error} 
+                  style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
+                  Missing file title or attached file!
+                </Alert>
+                <Alert color="success" isOpen={this.state.success} 
+                  style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
+                  Successfully uploaded {this.state.uploadedTitle}!
+                </Alert>
+              </Col>
+              <Upload files={this.state.files} success={this.alertSuccess} error={this.alertError} submit={this.submit} />
+            </Fade>
           )}/>
           <Route exact path="/modify" render={props => (
             <Fade in={true}>
