@@ -10,7 +10,7 @@ export class ImageModal extends Component {
           <img width="100%" height="100%" src={'/img/' + this.props.img} alt={this.props.img} />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.props.close}>Close</Button>
+          <Button color="secondary" onClick={this.props.close}>Close</Button>
         </ModalFooter>
       </Modal>
     )
