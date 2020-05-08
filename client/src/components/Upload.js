@@ -30,7 +30,7 @@ export class Upload extends Component {
 
   // Handle form interaction
   onChangeTitle = (event) => {
-    event.target.value = event.target.value.replace(' ', '-')
+    event.target.value = event.target.value.replace(' ', '-').replace('.', '')
     this.setState({ title: event.target.value })
   }
 
