@@ -66,7 +66,7 @@ export class Upload extends Component {
       <React.Fragment>
         <OverwriteModal display={this.state.displayModal} continue={this.modalContinue} close={this.modalClose} />
         <Form method="post" onSubmit={this.onSubmit} encType="multipart/form-data">
-        <Col sm={{size: 4, offset:4}}>
+        <Col xs={{ size: 12 }} md={{size: 4, offset:4}}>
           <FormGroup style={{margin: '30px 0px'}}>
             <Label htmlFor="imageTitle">Image Title</Label>
             <Input type="text" name="title" id="imageTitle" 
@@ -82,7 +82,6 @@ export class Upload extends Component {
             <Button color="dark" value="Upload">Upload</Button>
           </Col>
         </Col>
-        <p style={{minHeight: '451px'}}></p>
       </Form>
       </React.Fragment>
     )

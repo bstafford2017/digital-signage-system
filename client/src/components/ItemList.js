@@ -13,7 +13,7 @@ export class ItemList extends Component {
     }
 
     return (
-      <Row sm="2">
+      <Row xs="1" md="2">
         {this.props.files.map(file => 
           <Item file={file} delete={this.props.delete} />
         )}
