@@ -57,7 +57,7 @@ export class Upload extends Component {
         }
       })
     } else {
-      this.props.error()
+      this.props.error('Missing title or file when attempting to upload')
     }
   }
 

@@ -1,49 +1,43 @@
 const express = require('express')
 const fs = require('fs')
+const { promisify } = require('util')
 const router = express.Router()
 
 const uploadPath = __dirname + '/../../uploads'
+const readdir = promisify(fs.readdir)
 
 // Get all files
-router.get('/', (req, res) => {
-  fs.readdir(uploadPath, (err, files) => {
-    if(err){
-      if(err.code === 'ENOENT'){
-        // Page not found
-        res.status(400).json({ msg: `No files uploaded yet` })
-      } else {
-        res.status(400).json({ msg: `Error: ${err}` })
-      }
-    } else {
-      const fileWithData = []
-      files.forEach(file => {
-        const stats = fs.statSync(uploadPath + `/${file}`)
-        fileWithData.push({ title: file, date: stats.mtime.toUTCString()})
-      })
-      res.json(fileWithData)
-    }
-  })
+router.get('/', async (req, res) => {
+  try {
+    const files = await readdir(uploadPath)
+    const filesWithData = files.map(file => {
+      const stats = fs.statSync(uploadPath + `/${file}`)
+      return {title: file, date: stats.birthtime.toLocaleString()}
+    })
+    res.json(filesWithData)
+  } catch(err) {
+    res.status(400).json({ msg: (err.code === 'ENOENT') ? 
+      'No files uploaded yet' : `Error: ${err}` })
+  }
 })
 
 // Create a file
 router.post('/', (req, res) => {
-
-  if(!req.files){
-    return res.status(400).json({ msg:'No file found when attempting to upload' })
+  if(!req.files || !req.body.title){
+    return res.status(400).json({ msg:'No title or file found when attempting to upload' })
   }
 
   const file = req.files.file
   const title = req.body.title
 
-  if(title.includes('.png') || title.includes('.jpeg') || title.includes('.jpg')){
-    const fileName = title
+  if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg'){
 
     // Check if uploads folder exists
     if(!fs.existsSync('./uploads')){
       fs.mkdirSync('./uploads')
     }
 
-    file.mv(`${uploadPath}/${fileName}`, (err) => {
+    file.mv(`${uploadPath}/${title}`, (err) => {
       if(err) 
         res.status(400).json({ msg: `Error: ${err}` })
       else 

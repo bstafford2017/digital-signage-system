@@ -14,6 +14,7 @@ class App extends Component {
     files: [],
     success: false,
     error: false,
+    msg: '',
     uploadedTitle: null
   }
 
@@ -36,22 +37,29 @@ class App extends Component {
     this.setState({ uploadedTitle: title, success: true, error: false }, () => {return})
   }
 
-  alertError = () => {
-    this.setState({ success: false, error: true }, () => {return})
+  alertError = (msg) => {
+    this.setState({ success: false, error: true, msg: msg }, () => {return})
   }
 
   submit = async (title, file) => {
-    const data = new FormData()
-    data.append('file', file)
-    data.append('title', title)
-    await axios.post('/api/upload', data, { title })
-    this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] })
+    try {
+      const data = new FormData()
+      data.append('file', file)
+      data.append('title', title)
+      await axios.post('/api/upload', data, { title })
+      this.setState({ files: [...this.state.files, {title: title, date: file.lastModifiedDate}] })
+    } catch (err) {
+      this.setState({ success: false, error: true, msg: err.response.data.msg }, () => {return})
+    }
   }
 
   delete = async (file) => {
-    console.log(file)
-    await axios.delete(`/api/upload/${file.title}`)
-    this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]})
+    try {
+      await axios.delete(`/api/upload/${file.title}`)
+      this.setState({files: [...this.state.files.filter(stateFile => stateFile.title !== file.title)]})
+    } catch (err) {
+      this.setState({ success: false, error: true, msg: err.response.data.msg }, () => {return})
+    }
   }
 
   render() {
@@ -64,7 +72,7 @@ class App extends Component {
               <Col sm={{size: 6, offset: 3}}>
                 <Alert color="danger" isOpen={this.state.error} 
                   style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
-                  Missing file title or attached file!
+                  {this.state.msg}
                 </Alert>
                 <Alert color="success" isOpen={this.state.success} 
                   style={{margin: '30px 0px'}}  toggle={this.removeAlert}>
