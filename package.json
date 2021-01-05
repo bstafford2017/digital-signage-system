@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/bstafford2017/digital-signage-system#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "concurrently": "^5.1.0",
     "express": "^4.17.1",
