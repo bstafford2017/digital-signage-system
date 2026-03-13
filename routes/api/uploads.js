@@ -1,5 +1,6 @@
 const express = require('express')
 const fs = require('fs')
+const path = require('path')
 const { promisify } = require('util')
 const router = express.Router()
 
@@ -28,7 +29,7 @@ router.post('/', (req, res) => {
   }
 
   const file = req.files.file
-  const title = req.body.title
+  const title = path.basename(req.body.title)
 
   if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg'){
 
@@ -50,7 +51,7 @@ router.post('/', (req, res) => {
 
 // Delete a file
 router.delete('/:title', (req, res) => {
-  const title = req.params.title
+  const title = path.basename(req.params.title)
   if(fs.existsSync(`${uploadPath}/${title}`)){
     fs.unlink(`${uploadPath}/${title}`, (err) => res.json({ msg: `Error: ${err}` }))
   } else {
